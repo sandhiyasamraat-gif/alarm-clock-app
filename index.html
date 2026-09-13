@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#111827">
+    <title>AlarmX - Smart Alarm Clock</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">⏰</div>
+            <div>
+                <h2>AlarmX</h2>
+                <span>Smart Alarm Clock</span>
+            </div>
+        </div>
+
+        <nav>
+            <button class="nav-item active" data-page="clockPage">
+                🕐 <span>Clock</span>
+            </button>
+
+            <button class="nav-item" data-page="alarmsPage">
+                ⏰ <span>Alarms</span>
+            </button>
+
+            <button class="nav-item" data-page="settingsPage">
+                ⚙️ <span>Settings</span>
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="status-dot"></div>
+            <span>Alarm system ready</span>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+
+        <!-- Header -->
+        <header class="topbar">
+            <div>
+                <h1 id="pageTitle">Good Evening 👋</h1>
+                <p>Your personal smart alarm clock</p>
+            </div>
+
+            <button id="themeToggle" class="theme-btn">
+                🌙
+            </button>
+        </header>
+
+
+        <!-- CLOCK PAGE -->
+        <section id="clockPage" class="page active-page">
+
+            <div class="clock-card">
+
+                <div class="clock-decoration"></div>
+
+                <p class="clock-label">CURRENT TIME</p>
+
+                <div id="currentTime" class="current-time">
+                    00:00:00
+                </div>
+
+                <div id="ampm" class="ampm">
+                    AM
+                </div>
+
+                <div id="currentDate" class="current-date">
+                    Sunday, January 1, 2026
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-grid">
+
+                <!-- Next Alarm -->
+                <div class="next-alarm-card">
+                    <div class="card-header">
+                        <div>
+                            <span class="small-title">NEXT ALARM</span>
+                            <h2 id="nextAlarmTime">No alarm</h2>
+                        </div>
+
+                        <div class="alarm-icon">⏰</div>
+                    </div>
+
+                    <p id="nextAlarmLabel">Set an alarm to get started</p>
+
+                    <div class="countdown">
+                        <span id="nextAlarmCountdown">--:--:--</span>
+                        <small>remaining</small>
+                    </div>
+                </div>
+
+
+                <!-- Quick Add -->
+                <div class="quick-card">
+
+                    <div class="quick-icon">+</div>
+
+                    <h2>Set a new alarm</h2>
+
+                    <p>Create a new alarm for your schedule.</p>
+
+                    <button id="quickAddBtn" class="primary-btn">
+                        + Add Alarm
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- Today's alarms -->
+            <div class="section-header">
+                <div>
+                    <h2>Today's Alarms</h2>
+                    <p>Your scheduled alarms</p>
+                </div>
+
+                <button id="viewAllBtn" class="text-btn">
+                    View all →
+                </button>
+            </div>
+
+            <div id="homeAlarmList" class="alarm-list">
+                <!-- JavaScript inserts alarms -->
+            </div>
+
+        </section>
+
+
+        <!-- ALARMS PAGE -->
+        <section id="alarmsPage" class="page">
+
+            <div class="page-heading">
+                <div>
+                    <h2>My Alarms</h2>
+                    <p>Create and manage your alarms</p>
+                </div>
+
+                <button id="addAlarmBtn" class="primary-btn">
+                    + Add Alarm
+                </button>
+            </div>
+
+            <div id="alarmList" class="alarm-list">
+                <!-- JavaScript inserts alarms -->
+            </div>
+
+        </section>
+
+
+        <!-- SETTINGS PAGE -->
+        <section id="settingsPage" class="page">
+
+            <div class="page-heading">
+                <div>
+                    <h2>Settings</h2>
+                    <p>Customize your AlarmX experience</p>
+                </div>
+            </div>
+
+            <div class="settings-card">
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Dark Mode</strong>
+                        <p>Use a dark interface</p>
+                    </div>
+
+                    <label class="switch">
+                        <input type="checkbox" id="darkModeSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+
+                <div class="setting-row">
+                    <div>
+                        <strong>24-Hour Format</strong>
+                        <p>Display time using 24-hour format</p>
+                    </div>
+
+                    <label class="switch">
+                        <input type="checkbox" id="formatSwitch">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Default Snooze</strong>
+                        <p>Choose your default snooze duration</p>
+                    </div>
+
+                    <select id="snoozeSetting">
+                        <option value="5">5 minutes</option>
+                        <option value="10">10 minutes</option>
+                        <option value="15">15 minutes</option>
+                    </select>
+                </div>
+
+
+                <div class="setting-row">
+                    <div>
+                        <strong>Notifications</strong>
+                        <p>Allow browser notifications</p>
+                    </div>
+
+                    <button id="notificationBtn" class="secondary-btn">
+                        Enable
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ADD / EDIT ALARM MODAL -->
+
+<div id="alarmModal" class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <div>
+                <span class="modal-small">ALARM</span>
+                <h2 id="modalTitle">Create New Alarm</h2>
+            </div>
+
+            <button id="closeModal" class="close-btn">
+                ×
+            </button>
+        </div>
+
+
+        <form id="alarmForm">
+
+            <label>Alarm Time</label>
+
+            <div class="time-input-row">
+
+                <input
+                    type="time"
+                    id="alarmTime"
+                    required
+                >
+
+            </div>
+
+
+            <label>Alarm Label</label>
+
+            <input
+                type="text"
+                id="alarmLabel"
+                placeholder="Example: College Morning"
+            >
+
+
+            <label>Repeat</label>
+
+            <select id="repeatOption">
+
+                <option value="once">Once</option>
+
+                <option value="daily">
+                    Every Day
+                </option>
+
+                <option value="weekdays">
+                    Weekdays
+                </option>
+
+                <option value="weekends">
+                    Weekends
+                </option>
+
+            </select>
+
+
+            <label>Alarm Tone</label>
+
+            <div class="tone-grid">
+
+                <label class="tone-option">
+                    <input
+                        type="radio"
+                        name="tone"
+                        value="classic"
+                        checked
+                    >
+                    🔔 Classic Alarm
+                </label>
+
+                <label class="tone-option">
+                    <input
+                        type="radio"
+                        name="tone"
+                        value="digital"
+                    >
+                    📱 Digital Beep
+                </label>
+
+                <label class="tone-option">
+                    <input
+                        type="radio"
+                        name="tone"
+                        value="gentle"
+                    >
+                    🌅 Gentle Morning
+                </label>
+
+                <label class="tone-option">
+                    <input
+                        type="radio"
+                        name="tone"
+                        value="bell"
+                    >
+                    🔔 Soft Bell
+                </label>
+
+            </div>
+
+
+            <label>Snooze Duration</label>
+
+            <select id="alarmSnooze">
+
+                <option value="5">
+                    5 minutes
+                </option>
+
+                <option value="10">
+                    10 minutes
+                </option>
+
+                <option value="15">
+                    15 minutes
+                </option>
+
+            </select>
+
+
+            <div class="modal-actions">
+
+                <button
+                    type="button"
+                    id="cancelAlarm"
+                    class="secondary-btn"
+                >
+                    Cancel
+                </button>
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Save Alarm
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- RINGING SCREEN -->
+
+<div id="ringingOverlay" class="ringing-overlay">
+
+    <div class="ringing-content">
+
+        <div class="ring-animation">
+            ⏰
+        </div>
+
+        <p>ALARM RINGING</p>
+
+        <h1 id="ringingTime">
+            07:00 AM
+        </h1>
+
+        <h2 id="ringingLabel">
+            Good Morning
+        </h2>
+
+        <div class="ringing-buttons">
+
+            <button
+                id="snoozeBtn"
+                class="snooze-btn"
+            >
+                😴 Snooze
+            </button>
+
+            <button
+                id="dismissBtn"
+                class="dismiss-btn"
+            >
+                ✓ Dismiss
+            </button>
+
+        </div>
+
+        <p id="snoozeMessage"></p>
+
+    </div>
+
+</div>
+
+
+<!-- Audio -->
+<audio
+    id="alarmSound"
+    src="assets/alarm.mp3"
+    loop
+></audio>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
